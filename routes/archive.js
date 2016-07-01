@@ -20,8 +20,8 @@ router.get('/', function(req, res, next) {
                       }
     }).then(function (resp) {
         var hits = resp.hits.hits;
-        // res.send(hits);
-        res.render('archive', {docs: hits})
+        res.send(hits);
+        // res.render('archive', {docs: hits})
     }, function (err) {
         console.trace(err.message)
     })
