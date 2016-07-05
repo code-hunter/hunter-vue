@@ -5,7 +5,7 @@ var Vue = require('vue');
 var VueRouter = require('vue-router');
 var VueResource = require('vue-resource')
 
-var App = require('./components/app.archive.vue')
+var App = require('./components/app.test.vue')
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
