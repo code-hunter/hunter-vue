@@ -1,7 +1,6 @@
 <template>
     <div>
         <h3>archive page list:</h3>
-        <h3>archive page list:</h3>
         <div>
             <ul v-if="docs">
                 <li v-for="doc in docs" >
