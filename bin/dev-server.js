@@ -61,7 +61,7 @@ app.use(devMiddleware)
 app.use(hotMiddleware)
 
 // serve pure static assets
-app.use('/public', express.static('../public'))
+app.use('/public', express.static('../'))
 
 app.use('/', index);
 app.use('/user', user);

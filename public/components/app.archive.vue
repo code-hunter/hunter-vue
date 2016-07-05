@@ -5,7 +5,7 @@
         <div>
             <ul v-if="docs">
                 <li v-for="doc in docs" >
-                    <a v-link="{{doc._source.url }}">{{doc._source.title }}</a>
+                    <a v-link="doc.url ">{{doc.title }}</a>
                 </li>
             </ul>
             <ul v-else>
@@ -20,11 +20,14 @@
 <script>
 
     export default{
-        data(){
+        data() {
+            return {docs : []}
+        },
+        created: function () {
 
-            return{
-                docs:[{'_source':{'url':'http://www.baidu.com', 'title':'baidu'}}]
-            }
+            this.$http.get('/archive/mongodb').then(function (res) {
+                this.docs = res.data;
+            })
         }
     }
 </script>
