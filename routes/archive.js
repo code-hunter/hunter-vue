@@ -12,12 +12,26 @@ router.get('/mongodb', function (req, res, next) {
     mongoclient.connect(url, function (err, db) {
         var collection = db.collection('archive')
         collection.find({}).toArray(function(err, docs) {
-            console.log(docs);
+            // console.log(docs);
             res.send(docs);
         });
     })
+})
 
+router.get('/getPage', function (req, res, next) {
+    var page = parseInt(req.param('page'));
+    var size = parseInt(req.param('size'));
 
+    var mongoclient = require('mongodb').MongoClient;
+    var url = 'mongodb://localhost:27017/hunter';
+
+    mongoclient.connect(url, function (err, db) {
+        var collection = db.collection('archive')
+        collection.find({}).skip((page-1)*size).sort({'_id':1}).limit(size).toArray(function(err, docs) {
+            // console.log(docs);
+            res.send(docs);
+        });
+    })
 })
 
 /* GET users listing. */

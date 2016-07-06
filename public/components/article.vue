@@ -28,8 +28,8 @@
         </div>
 
         <ul class="am-pagination">
-            <li class="am-pagination-prev"><a href="">&laquo; Prev</a></li>
-            <li class="am-pagination-next"><a href="">Next &raquo;</a></li>
+            <li class="am-pagination-prev"><a href="javascript:scroll(0,0)" @click="on_prev">&laquo; Prev</a></li>
+            <li class="am-pagination-next"><a href="javascript:scroll(0,0)" @click="on_next">Next &raquo;</a></li>
         </ul>
     </div>
 </template>
@@ -41,14 +41,43 @@
 
     export default{
         data() {
-            return {docs : []}
+            return {docs : [],
+                    page : 1}
         },
         created: function () {
 
-            this.$http.get('/archive/mongodb').then(function (res) {
+            this.$http.get('/archive/getPage?page=1&size=10').then(function (res) {
                 this.docs = res.data;
             })
+        },
+        methods: {
+            on_prev: function () {
+                if(this.page == 1) {
+                    alert('first page.');
+                    return;
+                }else {
+                    this.page--;
+                }
+
+                this.$http.get('/archive/getPage?page=' +this.page+'&size=10').then(function (res) {
+                    this.docs = res.data;
+                })
+            },
+            on_next: function () {
+                this.page++;
+                this.$http.get('/archive/getPage?page=' +this.page+'&size=10').then(function (res) {
+
+                    //todo : fixed me to max page size
+                    if((res.data).length <= 0) {
+                        alert('last page.');
+                        return;
+                    }else {
+                        this.docs = res.data
+                    }
+                })
+            }
         }
+
     }
 
 </script>
