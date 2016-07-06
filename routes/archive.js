@@ -19,8 +19,8 @@ router.get('/mongodb', function (req, res, next) {
 })
 
 router.get('/getPage', function (req, res, next) {
-    var page = parseInt(req.param('page'));
-    var size = parseInt(req.param('size'));
+    var page = parseInt(req.query.page);
+    var size = parseInt(req.query.size);
 
     var mongoclient = require('mongodb').MongoClient;
     var url = 'mongodb://localhost:27017/hunter';
