@@ -16,7 +16,7 @@
                         <span>{{doc.published_time}}</span>
                         <p>{{doc.summary}}
                         </p>
-                        <p><a href="" class="blog-continue">continue reading</a></p>
+                        <!--<p><a href="" class="blog-continue">continue reading</a></p>-->
                     </div>
 
                 </article>

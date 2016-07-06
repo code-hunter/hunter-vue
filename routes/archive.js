@@ -7,8 +7,7 @@ var router = express.Router();
 
 router.get('/mongodb', function (req, res, next) {
     var mongoclient = require('mongodb').MongoClient;
-    var url = 'mongodb://localhost:27017/hunter';
-
+    var url = 'mongodb://123.57.29.130:27017/hunter';
     mongoclient.connect(url, function (err, db) {
         var collection = db.collection('archive')
         collection.find({}).toArray(function(err, docs) {
@@ -23,7 +22,7 @@ router.get('/getPage', function (req, res, next) {
     var size = parseInt(req.param('size'));
 
     var mongoclient = require('mongodb').MongoClient;
-    var url = 'mongodb://localhost:27017/hunter';
+    var url = 'mongodb://123.57.29.130:27017/hunter';
 
     mongoclient.connect(url, function (err, db) {
         var collection = db.collection('archive')
