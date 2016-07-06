@@ -4,18 +4,16 @@
         <div v-if="docs">
             <div v-for="doc in docs" >
 
-                <a v-link="doc.url ">{{doc.title }}</a>
-
                 <article class="am-g blog-entry-article">
-                    <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-img">
-                        <img src="/assets/i/f10.jpg" alt="" class="am-u-sm-12">
-                    </div>
+                    <!--<div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-img">-->
+                        <!--<img src="/assets/i/f10.jpg" alt="" class="am-u-sm-12">-->
+                    <!--</div>-->
 
                     <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-text">
-                        <span><a href="" class="blog-color">article &nbsp;</a></span>
-                        <span> @amazeUI &nbsp;</span>
+
+                        <h1><a href={{doc.url}} target="_blank">{{doc.title}}</a></h1>
+                        <span><a href="" class="blog-color">作者:{{doc.author}}&nbsp;</a></span>
                         <span>{{doc.published_time}}</span>
-                        <h1><a v-link="doc.url">{{doc.title}}</a></h1>
                         <p>{{doc.summary}}
                         </p>
                         <p><a href="" class="blog-continue">continue reading</a></p>
