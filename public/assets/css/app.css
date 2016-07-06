@@ -486,3 +486,10 @@ h1 span{
 .timeline-span {
     border-left:2px solid #10D07A;
 }
+
+.archive-mid {
+    width: 50%;
+}
+.archive-font-size {
+    font-size: 1em;
+}

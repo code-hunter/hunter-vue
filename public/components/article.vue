@@ -9,9 +9,9 @@
                         <!--<img src="/assets/i/f10.jpg" alt="" class="am-u-sm-12">-->
                     <!--</div>-->
 
-                    <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-text">
+                    <div class="am-u-lg-12 am-u-md-12 am-u-sm-12 blog-entry-text">
 
-                        <h1><a href={{doc.url}} target="_blank">{{doc.title}}</a></h1>
+                        <h1 class="archive-font-size"><a href={{doc.url}} target="_blank">{{doc.title}}</a></h1>
                         <span><a href="" class="blog-color">作者:{{doc.author}}&nbsp;</a></span>
                         <span>{{doc.published_time}}</span>
                         <p>{{doc.summary}}

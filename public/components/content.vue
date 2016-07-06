@@ -1,9 +1,9 @@
 <template>
     <!-- content srart -->
-    <div class="am-g am-g-fixed blog-fixed">
+    <div class="am-g am-g-fixed blog-fixed archive-mid">
 
         <article-component></article-component>
-        <rightbar-component></rightbar-component>
+        <!--<rightbar-component></rightbar-component>-->
     </div>
     <!-- content end -->
 </template>
