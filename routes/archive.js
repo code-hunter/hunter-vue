@@ -22,7 +22,7 @@ router.get('/getPage', function (req, res, next) {
     var size = parseInt(req.query.size);
 
     var mongoclient = require('mongodb').MongoClient;
-    var url = 'mongodb://123.57.29.130:27017/hunter';
+    var url = 'mongodb://localhost:27017/hunter';
 
     mongoclient.connect(url, function (err, db) {
         var collection = db.collection('archive')

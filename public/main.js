@@ -5,7 +5,9 @@ var Vue = require('vue');
 var VueRouter = require('vue-router');
 var VueResource = require('vue-resource')
 
-var App = require('./components/app.test.vue')
+var App = require('./components/app.vue')
+var index = require('./components/index.vue')
+var Login = require('./components/login.vue')
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
@@ -13,8 +15,11 @@ Vue.use(VueRouter);
 var router = new VueRouter();
 
 router.map({
+    '/login':{
+        component: Login
+    },
     '/': {
-        component: App
+        component: index
     }
 });
 

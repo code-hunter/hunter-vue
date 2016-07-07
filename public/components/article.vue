@@ -34,8 +34,6 @@
     </div>
 </template>
 
-<style src="../assets/css/amazeui.min.css"></style>
-<style src="../assets/css/app.css"></style>
 
 <script>
 
@@ -75,18 +73,8 @@
                         this.docs = res.data
                     }
                 })
-            },
-            pageScroll: function () {
-                alert('page scroll')
-                window.scrollBy(0,-10);
-                scrolldelay = setTimeout('pageScroll()',100);
-                if(document.documentElement.scrollTop==0)
-                    clearTimeout(scrolldelay);
             }
-
-
-    }
-
+        }
     }
 
 </script>

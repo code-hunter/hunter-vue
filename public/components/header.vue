@@ -27,7 +27,7 @@
             </ul>
 
             <div class="am-topbar-right">
-                <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm">登录/注册</button>
+                <button @click="on_login" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">登录/注册</button>
             </div>
 
             <div class="am-topbar-right">
@@ -44,9 +44,14 @@
 
 </template>
 
-<style src="../assets/css/amazeui.min.css"></style>
-<style src="../assets/css/app.css"></style>
-
 <script>
+
+    export default{
+        methods: {
+            on_login: function () {
+                window.location.href = '#/login';
+            },
+        }
+    }
 
 </script>

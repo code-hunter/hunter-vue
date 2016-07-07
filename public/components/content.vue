@@ -8,16 +8,11 @@
     <!-- content end -->
 </template>
 
-<style src="../assets/css/amazeui.min.css"></style>
-<style src="../assets/css/app.css"></style>
-
 <script>
-
     import Rihgtbar from './rightbar.vue'
     import Article from './article.vue'
 
     export default{
-
         components: {
             'article-component': Article,
             'rightbar-component': Rihgtbar

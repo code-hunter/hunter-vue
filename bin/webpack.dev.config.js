@@ -1,4 +1,5 @@
 var webpack = require('webpack')
+var path = require('path');
 var merge = require('webpack-merge')
 var baseConfig = require('./webpack.base.config.js')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -23,7 +24,7 @@ module.exports = merge(baseConfig, {
         new HtmlWebpackPlugin({
             title: 'dev',
             filename: 'index.html',
-            template: '../public/index.html',
+            template: path.join(__dirname, '../public/index.html'),//  './public/index.html',
             inject: true
         })
     ]

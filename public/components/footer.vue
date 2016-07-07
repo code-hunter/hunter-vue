@@ -22,22 +22,19 @@
                 <h1>我们站在巨人的肩膀上</h1>
                 <h3>Heroes</h3>
                 <p>
-                <ul>
-                    <li>jQuery</li>
-                    <li>Zepto.js</li>
-                    <li>Seajs</li>
-                    <li>LESS</li>
-                    <li>...</li>
-                </ul>
+                    <ul>
+                        <li>jQuery</li>
+                        <li>Zepto.js</li>
+                        <li>Seajs</li>
+                        <li>LESS</li>
+                        <li>...</li>
+                    </ul>
                 </p>
             </div>
         </div>
         <div class="blog-text-center">© 2015 AllMobilize, Inc. Licensed under MIT license. Made with love By LWXYFER</div>
     </footer>
 </template>
-
-<style src="../assets/css/amazeui.min.css"></style>
-<style src="../assets/css/app.css"></style>
 
 
 <script>
