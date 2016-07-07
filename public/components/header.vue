@@ -11,8 +11,8 @@
 
         <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
             <ul class="am-nav am-nav-pills am-topbar-nav">
-                <li class="am-active"><a href="#">最热</a></li>
-                <li class="am-active"><a href="#">最新</a></li>
+                <li class="am-active"><a href="#" @click="on_search_by_pv">最热</a></li>
+                <li class="am-active"><a href="#" @click="on_search_by_time">最新</a></li>
                 <li class="am-dropdown" data-am-dropdown>
                     <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
                         菜单 <span class="am-icon-caret-down"></span>
@@ -48,7 +48,7 @@
 
     export default{
 
-        props: ['docs', 'search_words'],
+        props: ['docs', 'search_words', 'search_time', 'search_pv'],
 
         methods: {
             on_login: function () {
@@ -56,18 +56,38 @@
             },
 
             on_search: function () {
+                this.search_time = 0;
+                this.search_pv = 0;
 
                 if(!this.search_words.trim()) {
                     return;
                 }
 
-                this.$http.get('/archive/getPage?page=1&size=10&conds=' +this.search_words).then(function (res) {
+                this.$http.get('/archive/getPage?page=1&size=10&search_words=' +this.search_words).then(function (res) {
                     if(res.data.length >= 0){
                         this.docs = res.data;
                     }else{
                         this.docs = [];
                     }
 
+                })
+            },
+
+            on_search_by_time: function () {
+                this.search_time = 1;
+                this.search_pv = 0;
+                this.search_words = '';
+                this.$http.get('/archive/getPage?page=1&size=10&search_time='+this.search_time).then(function (res) {
+                    this.docs = res.data;
+                })
+            },
+
+            on_search_by_pv: function () {
+                this.search_pv = 1;
+                this.search_time = 0;
+                this.search_words = '';
+                this.$http.get('/archive/getPage?page=1&size=10&search_pv='+this.search_pv).then(function (res) {
+                    this.docs = res.data;
                 })
             }
         }

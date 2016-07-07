@@ -20,14 +20,25 @@ router.get('/mongodb', function (req, res, next) {
 router.get('/getPage', function (req, res, next) {
     var page = parseInt(req.query.page);
     var size = parseInt(req.query.size);
-    var conds = req.query.conds
+    var search_words = req.query.search_words
+    var search_time = parseInt(req.query.search_time)
+    var search_pv = parseInt(req.query.search_pv)
 
-    var q = {};    //定义空的查询对象
-    if (conds) {    //如果有搜索请求就增加查询条件
-        //用正则表达式得到的pattern对title属性进行模糊查询
-        //这里是搜集合里title属性包含str串的所有结果
-        var pattern = new RegExp("^.*"+conds+".*$");
+    var q = {};
+    if (search_words) {
+        var pattern = new RegExp("^.*"+search_words+".*$");
         q.title = pattern;
+    }
+
+    var s={'_id': 1};
+
+    if(search_time) {
+        //todo fixed me to published_time
+        s.create_time = -1;
+    }
+
+    if(search_pv) {
+        //todo fixed me to page view
     }
 
     var mongoclient = require('mongodb').MongoClient;
@@ -35,7 +46,7 @@ router.get('/getPage', function (req, res, next) {
 
     mongoclient.connect(url, function (err, db) {
         var collection = db.collection('archive')
-        collection.find(q).skip((page-1)*size).sort({'_id':1}).limit(size).toArray(function(err, docs) {
+        collection.find(q).skip((page-1)*size).sort(s).limit(size).toArray(function(err, docs) {
             // console.log(docs);
             res.send(docs);
         });

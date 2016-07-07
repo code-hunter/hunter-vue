@@ -38,10 +38,8 @@
 <script>
 
     export default{
-        props: {
-            'docs':Array ,
-            'search_words': String
-        },
+        props: ['docs', 'search_words', 'search_time', 'search_pv'],
+
         data() {
             return {
                 page : 1
@@ -62,13 +60,13 @@
                     this.page--;
                 }
 
-                this.$http.get('/archive/getPage?page=' +this.page+'&size=10&conds=' +this.search_words).then(function (res) {
+                this.$http.get('/archive/getPage?page=' +this.page+'&size=10&search_words=' +this.search_words+'&search_time='+this.search_time+'&search_pv='+this.search_pv).then(function (res) {
                     this.docs = res.data;
                 })
             },
             on_next: function () {
                 this.page++;
-                this.$http.get('/archive/getPage?page=' +this.page+'&size=10&conds=' +this.search_words).then(function (res) {
+                this.$http.get('/archive/getPage?page=' +this.page+'&size=10&search_words=' +this.search_words+'&search_time='+this.search_time+'&search_pv='+this.search_pv).then(function (res) {
 
                     //todo : fixed me to max page size
                     if((res.data).length <= 0) {
