@@ -1,5 +1,5 @@
 <template>
-    <div class="am-u-md-8 am-u-sm-12">
+    <div>
 
         <div v-if="docs">
             <div v-for="doc in docs" >
@@ -9,10 +9,10 @@
                         <!--<img src="/assets/i/f10.jpg" alt="" class="am-u-sm-12">-->
                     <!--</div>-->
 
-                    <div class="am-u-lg-12 am-u-md-12 am-u-sm-12 blog-entry-text">
+                    <div >
 
                         <h1 class="archive-font-size"><a href={{doc.url}} target="_blank">{{doc.title}}</a></h1>
-                        <span><a href="" class="blog-color">作者:{{doc.author}}&nbsp;</a></span>
+                        <span><a href="" class="h-author">作者:{{doc.author}}&nbsp;</a></span>
                         <span>{{doc.published_time}}</span>
                         <p>{{doc.summary}}
                         </p>

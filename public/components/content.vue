@@ -1,6 +1,6 @@
 <template>
     <!-- content srart -->
-    <div class="am-g am-g-fixed blog-fixed archive-mid">
+    <div class="h-content">
 
         <article-component></article-component>
         <!--<rightbar-component></rightbar-component>-->

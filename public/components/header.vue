@@ -1,6 +1,6 @@
 <template>
 
-    <header class="am-topbar">
+    <header class="h-topbar">
         <h1 class="am-topbar-brand">
             <a href="#">hunter</a>
         </h1>
