@@ -11,14 +11,14 @@
 
         <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
             <ul class="am-nav am-nav-pills am-topbar-nav">
-                <li class="am-active"><a href="#">前端</a></li>
-                <li class="am-active"><a href="#">后台</a></li>
+                <li class="am-active"><a href="#">最热</a></li>
+                <li class="am-active"><a href="#">最新</a></li>
                 <li class="am-dropdown" data-am-dropdown>
                     <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
                         菜单 <span class="am-icon-caret-down"></span>
                     </a>
                     <ul class="am-dropdown-content">
-                        <li class="am-dropdown-header">标题</li>
+                        <li class="am-dropdown-header">分类</li>
                         <li><a href="#">关于我们</a></li>
                         <li><a href="#">关于字体</a></li>
                         <li><a href="#">TIPS</a></li>
