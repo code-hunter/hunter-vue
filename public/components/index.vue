@@ -1,7 +1,7 @@
 <template>
     <div>
-        <header-component></header-component>
-        <content-component></content-component>
+        <header-component :docs.sync="docs" :search_words.sync="search_words"></header-component>
+        <content-component :docs.sync="docs" :search_words.sync="search_words"></content-component>
         <footer-component></footer-component>
     </div>
 </template>
@@ -17,7 +17,8 @@
     export default{
         data(){
             return {
-                msg: 'hello'
+                docs: [],
+                search_words: ''
             }
         },
         components: {

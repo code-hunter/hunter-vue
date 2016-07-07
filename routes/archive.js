@@ -20,13 +20,22 @@ router.get('/mongodb', function (req, res, next) {
 router.get('/getPage', function (req, res, next) {
     var page = parseInt(req.query.page);
     var size = parseInt(req.query.size);
+    var conds = req.query.conds
+
+    var q = {};    //定义空的查询对象
+    if (conds) {    //如果有搜索请求就增加查询条件
+        //用正则表达式得到的pattern对title属性进行模糊查询
+        //这里是搜集合里title属性包含str串的所有结果
+        var pattern = new RegExp("^.*"+conds+".*$");
+        q.title = pattern;
+    }
 
     var mongoclient = require('mongodb').MongoClient;
     var url = 'mongodb://localhost:27017/hunter';
 
     mongoclient.connect(url, function (err, db) {
         var collection = db.collection('archive')
-        collection.find({}).skip((page-1)*size).sort({'_id':1}).limit(size).toArray(function(err, docs) {
+        collection.find(q).skip((page-1)*size).sort({'_id':1}).limit(size).toArray(function(err, docs) {
             // console.log(docs);
             res.send(docs);
         });

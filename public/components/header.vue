@@ -31,12 +31,12 @@
             </div>
 
             <div class="am-topbar-right">
-                <form class="am-topbar-form am-topbar-left am-form-inline" role="search">
+                <div class="am-topbar-form am-topbar-left am-form-inline" role="search">
                     <div class="am-form-group">
-                        <input type="text" class="am-form-field am-input-sm" placeholder="搜索文章">
+                        <input type="text" class="am-form-field am-input-sm" v-model="search_words"  placeholder="搜索文章">
                     </div>
-                    <button type="submit" class="am-btn am-btn-default am-btn-sm">搜索</button>
-                </form>
+                    <button class="am-btn am-btn-default am-btn-sm" @click="on_search">搜索</button>
+                </div>
             </div>
 
         </div>
@@ -47,10 +47,29 @@
 <script>
 
     export default{
+
+        props: ['docs', 'search_words'],
+
         methods: {
             on_login: function () {
                 window.location.href = '#/login';
             },
+
+            on_search: function () {
+
+                if(!this.search_words.trim()) {
+                    return;
+                }
+
+                this.$http.get('/archive/getPage?page=1&size=10&conds=' +this.search_words).then(function (res) {
+                    if(res.data.length >= 0){
+                        this.docs = res.data;
+                    }else{
+                        this.docs = [];
+                    }
+
+                })
+            }
         }
     }
 

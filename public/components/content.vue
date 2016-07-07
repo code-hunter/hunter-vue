@@ -2,7 +2,7 @@
     <!-- content srart -->
     <div class="h-content">
 
-        <article-component></article-component>
+        <article-component :docs.sync="docs" :search_words.sync="search_words"></article-component>
         <!--<rightbar-component></rightbar-component>-->
     </div>
     <!-- content end -->
@@ -13,6 +13,11 @@
     import Article from './article.vue'
 
     export default{
+        props: [
+            'docs' ,
+            'search_words'
+        ],
+
         components: {
             'article-component': Article,
             'rightbar-component': Rihgtbar
