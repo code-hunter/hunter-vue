@@ -11,19 +11,8 @@
 
         <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
             <ul class="am-nav am-nav-pills am-topbar-nav">
-                <li class="am-active"><a href="#" @click="on_search_by_pv">最热</a></li>
-                <li class="am-active"><a href="#" @click="on_search_by_time">最新</a></li>
-                <li class="am-dropdown" data-am-dropdown>
-                    <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-                        菜单 <span class="am-icon-caret-down"></span>
-                    </a>
-                    <ul class="am-dropdown-content">
-                        <li class="am-dropdown-header">分类</li>
-                        <li><a href="#">关于我们</a></li>
-                        <li><a href="#">关于字体</a></li>
-                        <li><a href="#">TIPS</a></li>
-                    </ul>
-                </li>
+                <li class="am-active"><a href="#" @click="on_search_by_pv">人工智能</a></li>
+                <li class="am-active"><a href="#" @click="on_search_by_time">量化投资</a></li>
             </ul>
 
             <div class="am-topbar-right">
@@ -45,6 +34,8 @@
 </template>
 
 <script>
+
+    require("amazeui")
 
     export default{
 
