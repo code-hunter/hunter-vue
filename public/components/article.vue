@@ -73,7 +73,7 @@
                 })
             },
             on_next: function () {
-                this.page++;
+
                 this.$http.get('/archive/getPage?page=' +this.page+'&size=10&search_title=' +this.search_title+'&search_subject='+this.search_subject).then(function (res) {
 
                     //todo : fixed me to max page size
@@ -82,6 +82,7 @@
                         return;
                     }else {
                         this.setDocs(res.data);
+                        this.page++;
                     }
                 })
             }
