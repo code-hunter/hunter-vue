@@ -8,6 +8,7 @@ var VueResource = require('vue-resource')
 var App = require('./components/app.vue')
 var index = require('./components/index.vue')
 var Login = require('./components/login.vue')
+var Register = require('./components/register.vue')
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
@@ -20,6 +21,9 @@ router.map({
     },
     '/': {
         component: index
+    },
+    '/register': {
+        component: Register
     }
 });
 

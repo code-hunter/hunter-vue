@@ -4,11 +4,11 @@
             <h1><a href="/">Amaze UI</a> </h1>
         </div>
         <div class="log-re">
-            <button type="button" class="am-btn am-btn-default am-radius log-button">注册</button>
+            <button type="button" class="am-btn am-btn-default am-radius log-button" v-link="{path:'/register'}">注册</button>
         </div>
     </header>
 
-    <div class="log">
+    <div class="h-login">
         <div class="am-g">
             <div class="am-u-lg-3 am-u-md-6 am-u-sm-8 am-u-sm-centered log-content">
                 <h1 class="log-title am-animation-slide-top">AmazeUI</h1>
@@ -35,27 +35,18 @@
                 </form>
             </div>
         </div>
-        <footer class="log-footer">
-            © 2014 AllMobilize, Inc. Licensed under MIT license.
-        </footer>
     </div>
 
-    <!--[if (gte IE 9)|!(IE)]><!-->
-    <script src="assets/js/jquery.min.js"></script>
-    <!--<![endif]-->
-    <!--[if lte IE 8 ]>
-    <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
-    <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
-    <![endif]-->
-    <script src="assets/js/amazeui.min.js"></script>
-    <script src="assets/js/app.js"></script>
 </template>
 
-<style>
-
-</style>
-
 <script>
+    require("jquery");
 
+    export default{
+        methods: {
+            on_before_re: function () {
+                window.location.href = '#/register';
+            }
+        }
+    }
 </script>

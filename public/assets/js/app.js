@@ -1,5 +1,3 @@
-
-
 $(function() {
   $('#log-form').validator({
     onValid: function(validity) {
@@ -21,5 +19,5 @@ $(function() {
       $alert.html(msg).show();
     }
   });
-  
+
 });

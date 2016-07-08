@@ -9,7 +9,7 @@
                 data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
                 class="am-icon-bars"></span></button>
 
-        <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+        <div class="h-header-ul am-topbar-collapse" id="doc-topbar-collapse">
             <ul class="am-nav am-nav-pills am-topbar-nav">
                 <li class="am-active"><a href="#" @click="on_search_by_pv">人工智能</a></li>
                 <li class="am-active"><a href="#" @click="on_search_by_time">量化投资</a></li>
