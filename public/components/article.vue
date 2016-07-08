@@ -5,20 +5,14 @@
             <div v-for="doc in docs" >
 
                 <article class="am-g blog-entry-article">
-                    <!--<div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-img">-->
-                        <!--<img src="/assets/i/f10.jpg" alt="" class="am-u-sm-12">-->
-                    <!--</div>-->
 
                     <div >
-
                         <h1 class="archive-font-size"><a href={{doc.url}} target="_blank">{{doc.title}}</a></h1>
                         <span><a href="" class="h-author">作者:{{doc.author}}&nbsp;</a></span>
                         <span>{{doc.published_time}}</span>
                         <p>{{doc.summary}}
                         </p>
-                        <!--<p><a href="" class="blog-continue">continue reading</a></p>-->
                     </div>
-
                 </article>
 
             </div>
