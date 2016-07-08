@@ -37,8 +37,12 @@
 
 <script>
 
+    var setDocs = require('../store/action').setDocs;
+    var docs = require('../store/getter').docs;
+    var search_title = require('../store/getter').search_title;
+    var search_subject = require('../store/getter').search_subject;
+
     export default{
-        props: ['docs', 'search_words', 'search_time', 'search_pv'],
 
         data() {
             return {
@@ -48,8 +52,18 @@
         created: function () {
 
             this.$http.get('/archive/getPage?page=1&size=10').then(function (res) {
-                this.docs = res.data;
+                this.setDocs(res.data);
             })
+        },
+        vuex: {
+            getters: {
+                docs,
+                search_title,
+                search_subject
+            },
+            actions:{
+                setDocs
+            }
         },
         methods: {
             on_prev: function () {
@@ -60,20 +74,20 @@
                     this.page--;
                 }
 
-                this.$http.get('/archive/getPage?page=' +this.page+'&size=10&search_words=' +this.search_words+'&search_time='+this.search_time+'&search_pv='+this.search_pv).then(function (res) {
-                    this.docs = res.data;
+                this.$http.get('/archive/getPage?page=' +this.page+'&size=10&search_title=' +this.search_title+'&search_subject='+this.search_subject).then(function (res) {
+                    this.setDocs(res.data);
                 })
             },
             on_next: function () {
                 this.page++;
-                this.$http.get('/archive/getPage?page=' +this.page+'&size=10&search_words=' +this.search_words+'&search_time='+this.search_time+'&search_pv='+this.search_pv).then(function (res) {
+                this.$http.get('/archive/getPage?page=' +this.page+'&size=10&search_title=' +this.search_title+'&search_subject='+this.search_subject).then(function (res) {
 
                     //todo : fixed me to max page size
                     if((res.data).length <= 0) {
                         alert('last page.');
                         return;
                     }else {
-                        this.docs = res.data
+                        this.setDocs(res.data);
                     }
                 })
             }

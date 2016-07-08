@@ -20,37 +20,38 @@ router.get('/mongodb', function (req, res, next) {
 router.get('/getPage', function (req, res, next) {
     var page = parseInt(req.query.page);
     var size = parseInt(req.query.size);
-    var search_words = req.query.search_words
-    var search_time = parseInt(req.query.search_time)
-    var search_pv = parseInt(req.query.search_pv)
+    var search_title = req.query.search_title
+    var search_subject = req.query.search_subject
 
     var q = {};
-    if (search_words) {
-        var pattern = new RegExp("^.*"+search_words+".*$");
+    if (search_title) {
+        var pattern = new RegExp("^.*"+search_title+".*$");
         q.title = pattern;
+    }
+
+    if(search_subject) {
+        q.subject = search_subject;
     }
 
     var s={'_id': 1};
 
-    if(search_time) {
-        //todo fixed me to published_time
-        s.create_time = -1;
-    }
-
-    if(search_pv) {
-        //todo fixed me to page view
-    }
-
     var mongoclient = require('mongodb').MongoClient;
     var url = 'mongodb://localhost:27017/hunter';
 
-    mongoclient.connect(url, function (err, db) {
-        var collection = db.collection('archive')
-        collection.find(q).skip((page-1)*size).sort(s).limit(size).toArray(function(err, docs) {
-            // console.log(docs);
-            res.send(docs);
-        });
-    })
+    try{
+        mongoclient.connect(url, function (err, db) {
+
+            if(err) throw err;
+            var collection = db.collection('archive')
+            collection.find(q).skip((page-1)*size).sort(s).limit(size).toArray(function(err, docs) {
+                // console.log(docs);
+                res.send(docs);
+            });
+        })
+    }catch (e) {
+        throw e;
+    }
+
 })
 
 /* GET users listing. */
