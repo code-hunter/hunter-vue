@@ -10,6 +10,10 @@
                         <h1 class="archive-font-size"><a href={{doc.url}} target="_blank">{{doc.title}}</a></h1>
                         <span><a href="" class="h-author">作者:{{doc.author}}&nbsp;</a></span>
                         <span>{{doc.published_time}}</span>
+                        <p>
+                            <a href=""><span class="am-icon-heart am-icon-fw  "></span></a>
+                            <a href=""><span class="am-icon-star am-icon-fw "></span></a>
+                        </p>
                         <p>{{doc.summary}}
                         </p>
                     </div>
