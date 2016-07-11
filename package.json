@@ -20,6 +20,7 @@
     "jquery": "^2.2.3",
     "jquery-validation": "^1.15.0",
     "mongodb": "^2.1.18",
+    "node-uuid": "^1.4.7",
     "serve-favicon": "~2.3.0",
     "utility": "^1.8.0",
     "vue": "^1.0.20",

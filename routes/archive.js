@@ -3,6 +3,7 @@
  */
 
 var express = require('express');
+var utils = require('utility')
 var router = express.Router();
 
 router.get('/mongodb', function (req, res, next) {
@@ -12,6 +13,7 @@ router.get('/mongodb', function (req, res, next) {
         var collection = db.collection('archive')
         collection.find({}).toArray(function(err, docs) {
             // console.log(docs);
+            db.close();
             res.send(docs);
         });
     })
@@ -36,7 +38,7 @@ router.get('/getPage', function (req, res, next) {
     var s={'_id': 1};
 
     var mongoclient = require('mongodb').MongoClient;
-    var url = 'mongodb://123.57.29.130:27017/hunter';
+    var url = 'mongodb://localhost:27017/hunter';
 
     try{
         mongoclient.connect(url, function (err, db) {
@@ -45,6 +47,31 @@ router.get('/getPage', function (req, res, next) {
             var collection = db.collection('archive')
             collection.find(q).skip((page-1)*size).sort(s).limit(size).toArray(function(err, docs) {
                 // console.log(docs);
+                db.close();
+                res.send(docs);
+            });
+        })
+    }catch (e) {
+        throw e;
+    }
+})
+
+router.post('/createFavArchive', function (req, res, next) {
+    var user_id = req.body.user_id;
+    var archive_id = rqe.body.archive_id;
+
+    var mongoclient = require('mongodb').MongoClient;
+    var url = 'mongodb://localhost:27017/hunter';
+
+    try{
+        mongoclient.connect(url, function (err, db) {
+
+            if(err) throw err;
+            var collection = db.collection('user_fav_archive');
+            var doc = {}
+            collection.insertOne()(q).skip((page-1)*size).sort(s).limit(size).toArray(function(err, docs) {
+                // console.log(docs);
+                db.close();
                 res.send(docs);
             });
         })
@@ -52,6 +79,38 @@ router.get('/getPage', function (req, res, next) {
         throw e;
     }
 
+
+})
+
+router.get('/getFavArchives', function (req, res, next) {
+    var user_id = req.session.user_id
+    var page = parseInt(req.query.page);
+    var size = parseInt(req.query.size);
+
+    var q = {};
+    if (user_id) {
+        q.user_id = user_id;
+    }
+    
+    var s={'_id': 1};
+    
+    var mongoclient = require('mongodb').MongoClient;
+    var url = 'mongodb://localhost:27017/hunter';
+
+    try{
+        mongoclient.connect(url, function (err, db) {
+
+            if(err) throw err;
+            var collection = db.collection('archive')
+            collection.find(q).skip((page-1)*size).sort(s).limit(size).toArray(function(err, docs) {
+                // console.log(docs);
+                db.close();
+                res.send(docs);
+            });
+        })
+    }catch (e) {
+        throw e;
+    }
 })
 
 /* GET users listing. */
