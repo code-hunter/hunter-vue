@@ -7,18 +7,8 @@ var utils = require('utility')
 var uuid = require('node-uuid')
 var router = express.Router();
 
-router.get('/mongodb', function (req, res, next) {
-    var mongoclient = require('mongodb').MongoClient;
-    var url = 'mongodb://123.57.29.130:27017/hunter';
-    mongoclient.connect(url, function (err, db) {
-        var collection = db.collection('archive')
-        collection.find({}).toArray(function(err, docs) {
-            // console.log(docs);
-            db.close();
-            res.send(docs);
-        });
-    })
-})
+var mongoclient = require('mongodb').MongoClient;
+var url = 'mongodb://localhost:27017/hunter';
 
 router.get('/getPage', function (req, res, next) {
     var page = parseInt(req.query.page);
@@ -38,9 +28,6 @@ router.get('/getPage', function (req, res, next) {
 
     var s={'_id': 1};
 
-    var mongoclient = require('mongodb').MongoClient;
-    var url = 'mongodb://123.57.29.130:27017/hunter';
-
     try{
         mongoclient.connect(url, function (err, db) {
 
@@ -58,21 +45,18 @@ router.get('/getPage', function (req, res, next) {
 })
 
 router.post('/createApprove', function (req, res, next) {
-    var userId = req.session.userId;
+    var user_id = req.session.user_id;
     var user = req.session.user;
-    var archiveId = req.body.archiveId;
+    var archive_id = req.body.archive_id;
     var id = uuid.v1();
-
-    var mongoclient = require('mongodb').MongoClient;
-    var url = 'mongodb://localhost:27017/hunter';
+    var create_time = utils.YYYYMMDDHHmmss();
 
     try{
         mongoclient.connect(url, function (err, db) {
             if(err) throw err;
             var collection = db.collection('user_approve_archive');
-            var doc = {'id': id, 'user_id': user_id, 'archive_id': archiveId}
+            var doc = {'id': id, 'user_id': user_id, 'archive_id': archive_id,  'create_time':create_time}
             collection.insertOne(doc, function(err, result) {
-                // console.log(docs);
                 db.close();
                 if(err){
                     console.log('failed to insert doc: ' + doc);
@@ -91,21 +75,21 @@ router.post('/createFav', function (req, res, next) {
     var user_id = req.body.user_id;
     var archive_id = req.body.archive_id;
     var id = uuid.v1();
-
-    var mongoclient = require('mongodb').MongoClient;
-    var url = 'mongodb://localhost:27017/hunter';
+    var create_time = utils.YYYYMMDDHHmmss();
 
     try{
         mongoclient.connect(url, function (err, db) {
             if(err) throw err;
             var collection = db.collection('user_fav_archive');
-            var doc = {'id': id, 'user_id': user_id, 'archive_id': archive_id}
+            var doc = {'id': id, 'user_id': user_id, 'archive_id': archive_id, 'create_time':create_time}
             collection.insertOne(doc, function(err, result) {
-                // console.log(docs);
+                db.close();
                 if(err){
                     console.log('failed to insert doc: ' + doc);
+                    res.send({'code': '0001', 'status':'fail'})
                 }
-                db.close();
+
+                res.send({'code': '0000', 'status':'success'})
             });
         })
     }catch (e) {
@@ -125,9 +109,6 @@ router.get('/getFav', function (req, res, next) {
     
     var s={'_id': 1};
     
-    var mongoclient = require('mongodb').MongoClient;
-    var url = 'mongodb://localhost:27017/hunter';
-
     try{
         mongoclient.connect(url, function (err, db) {
 
@@ -143,27 +124,5 @@ router.get('/getFav', function (req, res, next) {
         throw e;
     }
 })
-
-/* GET users listing. */
-router.get('/elasticsearch', function(req, res, next) {
-    var es = require('elasticsearch');
-    var es_client = new es.Client({host: 'localhost:9200'});
-
-    es_client.search({index : 'hound',
-                      type: 'crawler',
-                      body: {
-                          query:{
-                              match_all: {
-                              }
-                          }
-                      }
-    }).then(function (resp) {
-        var hits = resp.hits.hits;
-        res.send(hits);
-        // res.render('archive', {docs: hits})
-    }, function (err) {
-        console.trace(err.message)
-    })
-});
 
 module.exports = router;

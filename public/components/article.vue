@@ -92,7 +92,7 @@
                     }
                 })
             },
-            on_approve: function (docId) {
+            on_approve: function (doc_id) {
                 if(!App.checkLogin()){
                     window.location.href = '#/login';
                 }
@@ -102,10 +102,9 @@
                     method: 'POST',
                     emulateJSON: true,
                     data: {
-                        archive_id: docId
+                        archive_id: doc_id
                     }
                 }).then(function (res) {
-                    debugger;
                     if (res.data.status == "fail") {
                         if (res.data.code == "0001") {
                             this.show("点赞失败");
@@ -115,7 +114,25 @@
                 });
             },
             on_bookmark: function () {
+                if(!App.checkLogin()){
+                    window.location.href = '#/login';
+                }
 
+                this.$http({
+                    url: '/archive/createFav',
+                    method: 'POST',
+                    emulateJSON: true,
+                    data: {
+                        archive_id: doc_id
+                    }
+                }).then(function (res) {
+                    if (res.data.status == "fail") {
+                        if (res.data.code == "0001") {
+                            this.show("收藏失败");
+                            alert("收藏失败");
+                        }
+                    }
+                });
             }
         }
     }
