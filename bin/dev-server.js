@@ -24,10 +24,10 @@ app.use(cookieParser('hunter cookie'));
 //config session
 app.use(session({
   store: new MongoStore({
-    host: "127.0.0.1",
+    host: "123.57.29.130",
     port: 27017,
     db: "session",
-    url: 'mongodb://localhost:27017/hunter',
+    url: 'mongodb://123.57.29.130:27017/hunter',
     "ttl": 60 * 60 * 24 * 30 //30 days
   }),
   resave:false,

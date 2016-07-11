@@ -15,7 +15,7 @@
                 <br>
                 <form class="am-form" id="log-form">
                     <div class="am-input-group am-radius am-animation-slide-left">
-                        <input v-model="email" type="email" id="doc-vld-email-2-1" class="am-radius" data-validation-message="请输入正确邮箱地址" placeholder="邮箱" required/>
+                        <input v-model="user_name" type="email" id="doc-vld-email-2-1" class="am-radius" data-validation-message="请输入正确邮箱地址" placeholder="邮箱" required/>
                         <span class="am-input-group-label log-icon am-radius"><i class="am-icon-user am-icon-sm am-icon-fw"></i></span>
                     </div>
                     <br>
@@ -52,15 +52,9 @@
     var $ = require("jquery");
 
     export default{
-        init() {
-            console.log("vue init ...");
-            this.$on("onBlur",function () {
-                console.log("email onBlur ...");
-            });
-        },
         data() {
             return {
-                email: '',
+                user_name: '',
                 pwd: '',
                 r_pwd:''
             }
@@ -94,13 +88,13 @@
                         if(!this.isFormValid()) {
                             return;
                         }
-                        console.log(" email : " + vue.email + ", pwd : "+vue.pwd + ", r_pwd : " + vue.r_pwd);
+                        console.log(" user_name : " + vue.user_name + ", pwd : "+vue.pwd + ", r_pwd : " + vue.r_pwd);
                         vue.$http({
                             url: '/user/re',
                             method: 'POST',
                             emulateJSON: true,
                             data: {
-                                email: vue.email,
+                                user_name: vue.user_name,
                                 pwd: vue.pwd
                             }
                         }).then(function (res) {
