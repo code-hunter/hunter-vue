@@ -1,27 +1,38 @@
 var express = require('express')
 var webpack = require('webpack')
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+var bodyParser = require('body-parser');
+
 var config = require('./webpack.dev.config')
 
 var index = require('../routes/index');
 var user = require('../routes/users');
 var archive = require('../routes/archive');
 
-// var proxyMiddleware = require('http-proxy-middleware')
-
 var app = express()
 var compiler = webpack(config)
 
-// Define HTTP proxies to your custom API backend
-// https://github.com/chimurai/http-proxy-middleware
-// var proxyTable = {
-//   // '/api': {
-//   //   target: 'http://jsonplaceholder.typicode.com',
-//   //   changeOrigin: true,
-//   //   pathRewrite: {
-//   //     '^/api': ''
-//   //   }
-//   // }
-// }
+//config body parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//config cookie
+app.use(cookieParser('hunter cookie'));
+
+//config session
+app.use(session({
+  store: new MongoStore({
+    host: "127.0.0.1",
+    port: 27017,
+    db: "session"
+  }),
+  resave:false,
+  saveUninitialized:false,
+  secret: 'hunter security'
+}))
+
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: config.output.publicPath,
@@ -40,15 +51,6 @@ compiler.plugin('compilation', function (compilation) {
     cb()
   })
 })
-
-// proxy api requests
-// Object.keys(proxyTable).forEach(function (context) {
-//   var options = proxyTable[context]
-//   if (typeof options === 'string') {
-//     options = { target: options }
-//   }
-//   app.use(proxyMiddleware(context, options))
-// })
 
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')())
