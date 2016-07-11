@@ -28,8 +28,9 @@ app.use(session({
     port: 27017,
     db: "session",
     url: 'mongodb://123.57.29.130:27017/hunter',
-    "ttl": 60 * 60 * 24 * 30 //30 days
+    "ttl": 60 * 60 * 24 * 7 //30 days
   }),
+  cookie: { maxAge: 60 * 60 * 24 * 7 },
   resave:false,
   saveUninitialized:false,
   secret: 'hunter security'

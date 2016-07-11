@@ -4,6 +4,7 @@
 
 var express = require('express');
 var utils = require('utility')
+var uuid = require('node-uuid')
 var router = express.Router();
 
 router.get('/mongodb', function (req, res, next) {
@@ -56,30 +57,56 @@ router.get('/getPage', function (req, res, next) {
     }
 })
 
-router.post('/createFavArchive', function (req, res, next) {
+router.post('/createApproveArchive', function (req, res, next) {
     var user_id = req.body.user_id;
-    var archive_id = rqe.body.archive_id;
+    var archive_id = req.body.archive_id;
+    var id = uuid.v1();
 
     var mongoclient = require('mongodb').MongoClient;
     var url = 'mongodb://localhost:27017/hunter';
 
     try{
         mongoclient.connect(url, function (err, db) {
-
             if(err) throw err;
-            var collection = db.collection('user_fav_archive');
-            var doc = {}
-            collection.insertOne()(q).skip((page-1)*size).sort(s).limit(size).toArray(function(err, docs) {
+            var collection = db.collection('user_approve_archive');
+            var doc = {'id': id, 'user_id': user_id, 'archive_id': archive_id}
+            collection.insertOne(doc, function(err, result) {
                 // console.log(docs);
+                if(err){
+                    console.log('failed to insert doc: ' + doc);
+                }
                 db.close();
-                res.send(docs);
             });
         })
     }catch (e) {
         throw e;
     }
+})
 
+router.post('/createFavArchive', function (req, res, next) {
+    var user_id = req.body.user_id;
+    var archive_id = req.body.archive_id;
+    var id = uuid.v1();
 
+    var mongoclient = require('mongodb').MongoClient;
+    var url = 'mongodb://localhost:27017/hunter';
+
+    try{
+        mongoclient.connect(url, function (err, db) {
+            if(err) throw err;
+            var collection = db.collection('user_fav_archive');
+            var doc = {'id': id, 'user_id': user_id, 'archive_id': archive_id}
+            collection.insertOne(doc, function(err, result) {
+                // console.log(docs);
+                if(err){
+                    console.log('failed to insert doc: ' + doc);
+                }
+                db.close();
+            });
+        })
+    }catch (e) {
+        throw e;
+    }
 })
 
 router.get('/getFavArchives', function (req, res, next) {

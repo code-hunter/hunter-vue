@@ -40,6 +40,8 @@
     var search_title = require('../store/getter').search_title;
     var search_subject = require('../store/getter').search_subject;
 
+    var App = require('../assets/js/app')
+
     export default{
 
         data() {
@@ -91,10 +93,17 @@
                 })
             },
             on_approve: function () {
+                debugger
+                console.log(App.checkLogin())
+
+                if(!App.checkLogin()){
+                    window.location.href = '#/login';
+                }
+
                 
             },
             on_bookmark: function () {
-                
+
             }
         }
     }
