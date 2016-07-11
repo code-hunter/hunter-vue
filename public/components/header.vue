@@ -16,7 +16,7 @@
             </ul>
 
             <div class="am-topbar-right">
-                <button @click="on_login" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">登录/注册</button>
+                <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"><a v-link="{path:'/login'}">登录</a>/<a v-link="{path:'/register'}">注册</a></button>
             </div>
 
             <div class="am-topbar-right">

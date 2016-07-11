@@ -19,6 +19,7 @@
     "jquery-validation": "^1.15.0",
     "mongodb": "^2.1.18",
     "serve-favicon": "~2.3.0",
+    "utility": "^1.8.0",
     "vue": "^1.0.20",
     "vue-directive-waves": "0.0.1",
     "vue-resource": "^0.7.0",

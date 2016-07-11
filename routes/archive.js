@@ -36,7 +36,7 @@ router.get('/getPage', function (req, res, next) {
     var s={'_id': 1};
 
     var mongoclient = require('mongodb').MongoClient;
-    var url = 'mongodb://localhost:27017/hunter';
+    var url = 'mongodb://123.57.29.130:27017/hunter';
 
     try{
         mongoclient.connect(url, function (err, db) {

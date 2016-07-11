@@ -1,5 +1,6 @@
 var app = require('express')();
 var bodyParser = require('body-parser');
+const utils = require('utility');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -15,7 +16,16 @@ app.post("/re", function (req, res, next) {
     var collection = db.collection('users');
 
     collection.find({"email": email}).toArray(function (err, docs) {
-      console.log(docs);
+      if(docs.length > 0) {
+        res.send({"status": "fail", "code": "0001"});
+      }else {
+        collection.insertOne({"email": email, pwd: utils.md5(pwd)}, function (err, r) {
+          console.log(r);
+          if(1 == r.insertedCount) {
+            res.send({data: r.ops[0].email, status: "success"});
+          }
+        });
+      }
     });
     /*
     collection.count([{"email": email}], function (err, count) {

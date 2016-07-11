@@ -41,14 +41,23 @@
             </div>
         </div>
     </div>
+
+
+
+
+
 </template>
 <script>
     require("amazeui");
-    require("jquery-validation");
-
     var $ = require("jquery");
 
     export default{
+        init() {
+            console.log("vue init ...");
+            this.$on("onBlur",function () {
+                console.log("email onBlur ...");
+            });
+        },
         data() {
             return {
                 email: '',
@@ -65,6 +74,7 @@
                     },
 
                     onInValid: function(validity) {
+                        debugger;
                         var $field = $(validity.field);
                         var $group = $field.closest('.am-input-group');
                         var $alert = $group.find('.am-alert');
@@ -77,13 +87,14 @@
                         }
                         $alert.html(msg).show();
                     },
-
                     submit: function () {
+
+                        var v = this;
+
                         if(!this.isFormValid()) {
                             return;
                         }
                         console.log(" email : " + vue.email + ", pwd : "+vue.pwd + ", r_pwd : " + vue.r_pwd);
-                        debugger;
                         vue.$http({
                             url: '/user/re',
                             method: 'POST',
@@ -93,7 +104,22 @@
                                 pwd: vue.pwd
                             }
                         }).then(function (res) {
-                            alert(res);
+                            debugger;
+
+                            var $group = $($("#doc-vld-email-2-1")).closest('.am-input-group');
+                            var $alert = $group.find('.am-alert');
+
+                            if (!$alert.length) {
+                                $alert = $('<div class="log-alert am-alert am-alert-danger am-radius"></div>').hide().
+                                appendTo($group);
+                            }
+                            if(res.data.status == "fail") {
+                                if(res.data.code == "0001"){
+                                    $alert.html("用户已存在").show();
+                                }
+                            }else{
+                                window.location.href = '#/';
+                            }
                         });
                     }
                 });
