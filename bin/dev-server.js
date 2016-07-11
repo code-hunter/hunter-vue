@@ -26,7 +26,8 @@ app.use(session({
   store: new MongoStore({
     host: "127.0.0.1",
     port: 27017,
-    db: "session"
+    db: "session",
+    "ttl": 60 * 60 * 24 * 30 //30 days
   }),
   resave:false,
   saveUninitialized:false,
