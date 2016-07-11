@@ -22,7 +22,7 @@ app.post("/re", function (req, res, next) {
           if(1 == r.insertedCount) {
             var user = r.ops[0];
             //set cookie
-            res.cookie("user_name", user.user_name);
+            res.cookie("login", true);
 
             //set session
             req.session.regenerate(function(){
@@ -54,7 +54,7 @@ app.post("/login", function (req, res, next) {
           res.send({"status": "fail", "code": "0003"})
         }else{
           //set cookie
-          res.cookie("user_name", user.user_name);
+          res.cookie("login", true);
 
           //set session
           req.session.regenerate(function(){
@@ -70,6 +70,13 @@ app.post("/login", function (req, res, next) {
     });
   });
 
+});
+
+app.get("/logout", function (req, res, next) {
+  res.clearCookie("login");
+  delete res.session.user;
+  delete res.session.userId;
+  res.send("/")
 });
 
 module.exports = app;

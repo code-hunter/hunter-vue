@@ -41,12 +41,28 @@
     var setSearchSubject = require('../store/action').setSearchSubject;
 
     export default{
+        created: function () {
+            var cookies_str = window.document.cookie;
+            if(cookies_str == undefined || cookies_str.length ==0) {
+                return;
+            }
+
+            var cookies = cookies_str.split(";");
+            for(var cooke in cookies) {
+                var strs = cooke.split("=");
+                if(strs[0] == "login"){
+
+                }
+
+            }
+        },
 
         data() {
             return {
-                search_title:'',
+                search_title: '',
                 search_subject: '',
-            }
+                isLogin: false
+            };
         },
 
         vuex: {
@@ -64,15 +80,15 @@
 
             on_search: function () {
 
-                if(!this.search_title.trim()) {
+                if (!this.search_title.trim()) {
                     return;
                 }
 
                 this.setSearchTitle(this.search_title);
-                this.$http.get('/archive/getPage?page=1&size=10&search_title=' +this.search_title).then(function (res) {
-                    if(res.data.length >= 0){
+                this.$http.get('/archive/getPage?page=1&size=10&search_title=' + this.search_title).then(function (res) {
+                    if (res.data.length >= 0) {
                         this.setDocs(res.data);
-                    }else{
+                    } else {
                         this.setDocs([]);
                     }
 
@@ -84,7 +100,7 @@
                 this.setSearchTitle('');
                 this.setSearchSubject(this.search_subject);
 
-                this.$http.get('/archive/getPage?page=1&size=10&search_subject='+this.search_subject).then(function (res) {
+                this.$http.get('/archive/getPage?page=1&size=10&search_subject=' + this.search_subject).then(function (res) {
                     this.docs = res.data;
                 })
             },
@@ -93,11 +109,11 @@
                 this.search_subject = 'invest';
                 this.setSearchTitle('');
                 this.setSearchSubject(this.search_subject);
-                this.$http.get('/archive/getPage?page=1&size=10&search_subject='+this.search_subject).then(function (res) {
+                this.$http.get('/archive/getPage?page=1&size=10&search_subject=' + this.search_subject).then(function (res) {
                     this.docs = res.data;
                 })
             }
         }
-    }
+    };
 
 </script>
