@@ -57,9 +57,10 @@ router.get('/getPage', function (req, res, next) {
     }
 })
 
-router.post('/createApproveArchive', function (req, res, next) {
-    var user_id = req.body.user_id;
-    var archive_id = req.body.archive_id;
+router.post('/createApprove', function (req, res, next) {
+    var userId = req.session.userId;
+    var user = req.session.user;
+    var archiveId = req.body.archiveId;
     var id = uuid.v1();
 
     var mongoclient = require('mongodb').MongoClient;
@@ -69,13 +70,16 @@ router.post('/createApproveArchive', function (req, res, next) {
         mongoclient.connect(url, function (err, db) {
             if(err) throw err;
             var collection = db.collection('user_approve_archive');
-            var doc = {'id': id, 'user_id': user_id, 'archive_id': archive_id}
+            var doc = {'id': id, 'user_id': user_id, 'archive_id': archiveId}
             collection.insertOne(doc, function(err, result) {
                 // console.log(docs);
+                db.close();
                 if(err){
                     console.log('failed to insert doc: ' + doc);
+                    res.send({'code': '0001', 'status':'fail'})
                 }
-                db.close();
+                
+                res.send({'code': '0000', 'status':'success'})
             });
         })
     }catch (e) {
@@ -83,7 +87,7 @@ router.post('/createApproveArchive', function (req, res, next) {
     }
 })
 
-router.post('/createFavArchive', function (req, res, next) {
+router.post('/createFav', function (req, res, next) {
     var user_id = req.body.user_id;
     var archive_id = req.body.archive_id;
     var id = uuid.v1();
@@ -109,7 +113,7 @@ router.post('/createFavArchive', function (req, res, next) {
     }
 })
 
-router.get('/getFavArchives', function (req, res, next) {
+router.get('/getFav', function (req, res, next) {
     var user_id = req.session.user_id
     var page = parseInt(req.query.page);
     var size = parseInt(req.query.size);

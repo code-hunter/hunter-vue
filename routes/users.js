@@ -2,7 +2,7 @@ var app = require('express')();
 const utils = require('utility');
 var uuid = require('node-uuid');
 
-var url = 'mongodb://123.57.29.130:27017/hunter';
+var url = 'mongodb://localhost:27017/hunter';
 var client = require('mongodb').MongoClient;
 
 
@@ -58,8 +58,8 @@ app.post("/login", function (req, res, next) {
 
           //set session
           req.session.regenerate(function(){
-            req.user = user;
-            req.session.userId = user.id;
+            req.session.user = user;
+            req.session.user_id = user.id;
             req.session.save();
 
             res.send({data: user.id, status: "success"});
@@ -75,7 +75,7 @@ app.post("/login", function (req, res, next) {
 app.get("/logout", function (req, res, next) {
   res.clearCookie("login");
   delete res.session.user;
-  delete res.session.userId;
+  delete res.session.user_id;
   res.send("/")
 });
 

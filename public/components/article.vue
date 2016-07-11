@@ -11,8 +11,8 @@
                         <span><a href="" class="h-author">作者:{{doc.author}}&nbsp;</a></span>
                         <span>{{doc.published_time}}</span>
                         <p>
-                            <a href="" @click="on_approve"><span class="am-icon-heart am-icon-fw  "></span></a>
-                            <a href="" @click="on_bookmark"><span class="am-icon-star am-icon-fw "></span></a>
+                            <a href="" @click="on_approve(doc._id)"><span class="am-icon-heart am-icon-fw  "></span></a>
+                            <a href="" @click="on_bookmark(doc._id)"><span class="am-icon-star am-icon-fw "></span></a>
                         </p>
                         <p>{{doc.summary}}
                         </p>
@@ -92,15 +92,27 @@
                     }
                 })
             },
-            on_approve: function () {
-                debugger
-                console.log(App.checkLogin())
-
+            on_approve: function (docId) {
                 if(!App.checkLogin()){
                     window.location.href = '#/login';
                 }
 
-                
+                this.$http({
+                    url: '/archive/createApprove',
+                    method: 'POST',
+                    emulateJSON: true,
+                    data: {
+                        archive_id: docId
+                    }
+                }).then(function (res) {
+                    debugger;
+                    if (res.data.status == "fail") {
+                        if (res.data.code == "0001") {
+                            this.show("点赞失败");
+                            alert("点赞失败");
+                        }
+                    }
+                });
             },
             on_bookmark: function () {
 
