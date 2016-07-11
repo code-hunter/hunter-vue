@@ -1,9 +1,5 @@
 var app = require('express')();
-var bodyParser = require('body-parser');
 const utils = require('utility');
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/re", function (req, res, next) {
   var email = req.body.email;
