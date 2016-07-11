@@ -27,6 +27,7 @@ app.use(session({
     host: "127.0.0.1",
     port: 27017,
     db: "session",
+    url: 'mongodb://localhost:27017/hunter',
     "ttl": 60 * 60 * 24 * 30 //30 days
   }),
   resave:false,

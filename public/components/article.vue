@@ -11,8 +11,8 @@
                         <span><a href="" class="h-author">作者:{{doc.author}}&nbsp;</a></span>
                         <span>{{doc.published_time}}</span>
                         <p>
-                            <a href=""><span class="am-icon-heart am-icon-fw  "></span></a>
-                            <a href=""><span class="am-icon-star am-icon-fw "></span></a>
+                            <a href="" @click="on_approve"><span class="am-icon-heart am-icon-fw  "></span></a>
+                            <a href="" @click="on_bookmark"><span class="am-icon-star am-icon-fw "></span></a>
                         </p>
                         <p>{{doc.summary}}
                         </p>
@@ -89,6 +89,12 @@
                         this.page++;
                     }
                 })
+            },
+            on_approve: function () {
+                
+            },
+            on_bookmark: function () {
+                
             }
         }
     }
