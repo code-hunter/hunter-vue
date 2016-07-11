@@ -15,8 +15,28 @@
                 <li class="am-active"><a href="#" @click="on_search_by_invest">量化投资</a></li>
             </ul>
 
-            <div class="am-topbar-right">
-                <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"><a v-link="{path:'/login'}">登录</a>/<a v-link="{path:'/register'}">注册</a></button>
+            <div v-if="isLogin">
+
+                <div class="am-topbar-right" id="blog-collapse">
+                    <ul class="am-nav am-nav-pills am-topbar-nav">
+                        <li class="am-dropdown" data-am-dropdown>
+                            <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                                <img height="30" class="h-circle" src="../assets/i/favicon.png"> <span class="am-icon-caret-down"></span>
+                            </a>
+                            <ul class="am-dropdown-content">
+                                <li><a href="#"><i class="am-icon-tachometer" aria-hidden="true"></i>&nbsp;&nbsp;账户</a></li>
+                                <li><a href="#"><i class="am-icon-star" aria-hidden="true"></i>&nbsp;&nbsp;收藏</a></li>
+                                <li><a href="#"><i class="am-icon-cog" aria-hidden="true"></i>&nbsp;&nbsp;设置</a></li>
+                                <li><a href="#" @click="on_logout"><i class="am-icon-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;退出</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div v-else>
+                <div class="am-topbar-right">
+                    <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm"><a v-link="{path:'/login'}">登录</a>/<a v-link="{path:'/register'}">注册</a></button>
+                </div>
             </div>
 
             <div class="am-topbar-right">
@@ -27,34 +47,22 @@
                     <button class="am-btn am-btn-default am-btn-sm" @click="on_search">搜索</button>
                 </div>
             </div>
-
         </div>
     </header>
-
 </template>
 
 <script>
 
-    require("amazeui")
+    require("amazeui");
+    var App = require('../assets/js/app');
     var setDocs = require('../store/action').setDocs;
     var setSearchTitle = require('../store/action').setSearchTitle;
     var setSearchSubject = require('../store/action').setSearchSubject;
 
     export default{
         created: function () {
-            var cookies_str = window.document.cookie;
-            if(cookies_str == undefined || cookies_str.length ==0) {
-                return;
-            }
-
-            var cookies = cookies_str.split(";");
-            for(var cooke in cookies) {
-                var strs = cooke.split("=");
-                if(strs[0] == "login"){
-
-                }
-
-            }
+            this.isLogin = App.checkLogin();
+            console.log("is login : " + this.isLogin);
         },
 
         data() {
@@ -74,6 +82,12 @@
         },
 
         methods: {
+            on_logout: function () {
+                this.$http.get("/user/logout").then(function (res) {
+                    window.location.href = '#/login';
+                });
+            },
+
             on_login: function () {
                 window.location.href = '#/login';
             },

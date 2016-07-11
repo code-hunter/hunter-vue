@@ -6,8 +6,7 @@ module.exports = {
 
     checkLogin: function () {
         var cookies = window.document.cookie
-
-        if(cookies && cookies.indexOf("login=true") > 0) {
+        if(cookies && cookies.indexOf("login=true") != -1) {
             return true;
         }
 
