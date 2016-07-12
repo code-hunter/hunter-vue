@@ -38,8 +38,17 @@
     padding: 0;
 }
 
+.h-header-user{
+    min-width: 76px;
+    font-size: 14px;
+}
+
+.h-circle {
+    border-radius: 50%;
+    margin-bottom: 8px;
+}
+
 /* extends amazeui.css*/
 .am-dropdown a {
     color: #10D07A;
 }
-

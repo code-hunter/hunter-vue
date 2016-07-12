@@ -93,7 +93,7 @@
                                     vue.show("pwd_1_1", "密码错误");
                                 }
                             } else {
-                                window.location.href = '#/';
+                                window.location.href = '/';
                             }
                         });
                     }
