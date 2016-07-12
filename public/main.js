@@ -10,6 +10,9 @@ var index = require('./components/index.vue')
 var Login = require('./components/login.vue')
 var Register = require('./components/register.vue')
 
+var Fav = require('./components/admin/fav.vue')
+var Profile = require('./components/admin/profile.vue')
+
 Vue.use(VueResource);
 Vue.use(VueRouter);
 
@@ -24,6 +27,15 @@ router.map({
     },
     '/register': {
         component: Register
+    },
+    '/profile': {
+        component: Profile
+    },
+    '/fav' : {
+        component: Fav
+    },
+    '/profile' : {
+        component: Profile
     }
 });
 
