@@ -10,5 +10,8 @@ module.exports = {
     },
     setSearchSubject: function (store, subject) {
         store.dispatch('SETSUBJECT', subject);
-    }
+    },
+    setFavDocs: function(store, docs) {
+        store.dispatch('SETFAVDOCS', docs);
+    },
 };

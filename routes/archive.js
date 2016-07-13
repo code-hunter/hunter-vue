@@ -10,6 +10,30 @@ var router = express.Router();
 var mongoclient = require('mongodb').MongoClient;
 var url = 'mongodb://localhost:27017/hunter';
 
+function getArchive(archive_id) {
+    var q = {};
+    if (archive_id) {
+        q.id = archive_id;
+    }
+
+    try{
+        mongoclient.connect(url, function (err, db) {
+
+            if(err) throw err;
+            var collection = db.collection('archive')
+            collection.findOne(q, function (err, doc) {
+                db.close();
+                if(err){
+                    return null;
+                }
+                return doc;
+            });
+        })
+    }catch (e) {
+        throw e;
+    }
+}
+
 router.get('/getPage', function (req, res, next) {
     var page = parseInt(req.query.page);
     var size = parseInt(req.query.size);
@@ -51,11 +75,13 @@ router.post('/createApprove', function (req, res, next) {
     var id = uuid.v1();
     var create_time = utils.YYYYMMDDHHmmss();
 
+    var archive = getArchive(archive_id);
+
     try{
         mongoclient.connect(url, function (err, db) {
             if(err) throw err;
             var collection = db.collection('user_approve_archive');
-            var doc = {'id': id, 'user_id': user_id, 'archive_id': archive_id,  'create_time':create_time}
+            var doc = {'id': id, 'user_id': user_id, 'archive_id': archive_id, 'title': archive.title, 'url': archive.url, 'author': archive.author, 'published_time': archive.published_time,  'create_time':create_time}
             collection.insertOne(doc, function(err, result) {
                 db.close();
                 if(err){
@@ -72,7 +98,7 @@ router.post('/createApprove', function (req, res, next) {
 })
 
 router.post('/createFav', function (req, res, next) {
-    var user_id = req.body.user_id;
+    var user_id = req.session.user_id;
     var archive_id = req.body.archive_id;
     var id = uuid.v1();
     var create_time = utils.YYYYMMDDHHmmss();
@@ -80,16 +106,28 @@ router.post('/createFav', function (req, res, next) {
     try{
         mongoclient.connect(url, function (err, db) {
             if(err) throw err;
-            var collection = db.collection('user_fav_archive');
-            var doc = {'id': id, 'user_id': user_id, 'archive_id': archive_id, 'create_time':create_time}
-            collection.insertOne(doc, function(err, result) {
-                db.close();
+            var archive_collection = db.collection('archive');
+            var q = {};
+            if (archive_id) {
+                q.id = archive_id;
+            }
+            archive_collection.findOne(q, function (err, doc) {
                 if(err){
-                    console.log('failed to insert doc: ' + doc);
+                    console.log('failed to find doc: ' + archive_id);
                     res.send({'code': '0001', 'status':'fail'})
                 }
+                
+                var collection = db.collection('user_fav_archive');
+                var fav_archive = {'id': id, 'user_id': user_id, 'archive_id': archive_id, 'title': doc.title, 'url': doc.url, 'author': doc.author, 'published_time': doc.published_time, 'create_time':create_time}
+                collection.insertOne(fav_archive, function(err, result) {
+                    db.close();
+                    if(err){
+                        console.log('failed to insert doc: ' + fav_archive);
+                        res.send({'code': '0001', 'status':'fail'})
+                    }
 
-                res.send({'code': '0000', 'status':'success'})
+                    res.send({'code': '0000', 'status':'success'})
+                });
             });
         })
     }catch (e) {
@@ -113,7 +151,7 @@ router.get('/getFav', function (req, res, next) {
         mongoclient.connect(url, function (err, db) {
 
             if(err) throw err;
-            var collection = db.collection('archive')
+            var collection = db.collection('user_fav_archive')
             collection.find(q).skip((page-1)*size).sort(s).limit(size).toArray(function(err, docs) {
                 // console.log(docs);
                 db.close();

@@ -16,9 +16,9 @@
                     </a>
 
                     <ul class="am-dropdown-content">
-                        <li><a href="#"><span class="am-icon-user"></span> 账户</a></li>
-                        <li><a href="#"><span class="am-icon-user"></span> 收藏</a></li>
-                        <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
+                        <li><a v-link="{path:'/profile'}"><span class="am-icon-user"></span> 账户</a></li>
+                        <li><a v-link="{path:'/fav'}"><span class="am-icon-user"></span> 收藏</a></li>
+                        <!--<li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>-->
                         <li><a href="#"><span class="am-icon-power-off"></span> 退出</a></li>
                     </ul>
                 </li>

@@ -10,5 +10,8 @@ module.exports = {
     },
     SETSUBJECT: function (state, subject) {
         state.search_subject = subject;
-    }
+    },
+    SETFAVDOCS: function(state, docs) {
+        state.fav_docs = docs;
+    },
 }

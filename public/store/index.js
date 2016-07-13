@@ -9,6 +9,7 @@ Vue.use(Vuex);
 
 module.exports = new Vuex.Store({
     state: {
+        fav_docs: [],
         docs: [],
         search_title: '',
         search_subject: ''

@@ -52,53 +52,46 @@
                 </div>
 
                 <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4">
-                    <form class="am-form am-form-horizontal">
+                    <form class="am-form am-form-horizontal" id="profile-form">
                         <div class="am-form-group">
-                            <label for="user-name" class="am-u-sm-3 am-form-label">姓名 / Name</label>
+                            <label for="username" class="am-u-sm-3 am-form-label">姓名 / Name</label>
                             <div class="am-u-sm-9">
-                                <input type="text" id="user-name" placeholder="姓名 / Name">
+                                <input type="text" v-model="username" id="username" placeholder="姓名 / Name" value={{profile.username}}>
                             </div>
                         </div>
 
                         <div class="am-form-group">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">电子邮件 / Email</label>
+                            <label for="email" class="am-u-sm-3 am-form-label">电子邮件 / Email</label>
                             <div class="am-u-sm-9">
-                                <input type="email" id="user-email" placeholder="输入你的电子邮件 / Email">
+                                <input type="email" v-model="email" id="email" placeholder="输入你的电子邮件 / Email" value={{profile.email}}>
                             </div>
                         </div>
 
                         <div class="am-form-group">
-                            <label for="user-phone" class="am-u-sm-3 am-form-label">电话 / Telephone</label>
+                            <label for="phone" class="am-u-sm-3 am-form-label">电话 / Telephone</label>
                             <div class="am-u-sm-9">
-                                <input type="tel" id="user-phone" placeholder="输入你的电话号码 / Telephone">
+                                <input type="tel" v-model="phone" id="phone" placeholder="输入你的电话号码 / Telephone" value={{profile.phone}}>
                             </div>
                         </div>
 
                         <div class="am-form-group">
-                            <label for="user-QQ" class="am-u-sm-3 am-form-label">QQ</label>
+                            <label for="qq" class="am-u-sm-3 am-form-label">QQ</label>
                             <div class="am-u-sm-9">
-                                <input type="number" pattern="[0-9]*" id="user-QQ" placeholder="输入你的QQ号码">
+                                <input type="number" pattern="[0-9]*" v-model="qq" id="qq" placeholder="输入你的QQ号码" value={{profile.qq}}>
                             </div>
                         </div>
 
-                        <div class="am-form-group">
-                            <label for="user-weibo" class="am-u-sm-3 am-form-label">微博 / Twitter</label>
-                            <div class="am-u-sm-9">
-                                <input type="text" id="user-weibo" placeholder="输入你的微博 / Twitter">
-                            </div>
-                        </div>
 
                         <div class="am-form-group">
-                            <label for="user-intro" class="am-u-sm-3 am-form-label">简介 / Intro</label>
+                            <label for="detail" class="am-u-sm-3 am-form-label">简介 / Intro</label>
                             <div class="am-u-sm-9">
-                                <textarea class="" rows="5" id="user-intro" placeholder="输入个人简介"></textarea>
-                                <small>250字以内写出你的一生...</small>
+                                <textarea class="" rows="5" v-model="detail" id="detail" placeholder="输入个人简介">{{profile.detail}}</textarea>
                             </div>
                         </div>
 
                         <div class="am-form-group">
                             <div class="am-u-sm-9 am-u-sm-push-3">
-                                <button type="button" class="am-btn am-btn-primary">保存修改</button>
+                                <button  type="submit" @click="on_submit" class="am-btn am-btn-primary">保存修改</button>
                             </div>
                         </div>
                     </form>
@@ -114,5 +107,111 @@
 </style>
 
 <script>
+
+    var $ = require('jquery');
+    require("amazeui");
+
+    var App = require('../../assets/js/app')
+
+    export default{
+
+        data() {
+            return {
+                profile: {username: '',
+                    email: '',
+                    qq: '',
+                    phone: '',
+                    detail: ''},
+                username: '',
+                email: '',
+                qq: '',
+                phone: '',
+                detail: ''
+            }
+        },
+        
+        created: function () {
+            if(!App.checkLogin()){
+                window.location.href = '#/login';
+                return;
+            }
+
+            this.$http.get('/profile/get').then(function (res) {
+
+                //todo : fixed me to max page size
+                if (res.data.status == "fail") {
+                    if (res.data.code == "0001") {
+                        this.show("点赞失败");
+                        alert("点赞失败");
+                    }
+                }else {
+                    if(res.data.doc){
+                        this.profile = res.data.doc;
+                    }
+
+                }
+            })
+        },
+
+        methods: {
+            on_submit: function (e) {
+                if(!App.checkLogin()){
+                    window.location.href = '#/login';
+                    return;
+                }
+
+                console.log(this.username) ;
+                console.log(this.email);
+
+                var vue = this;
+                var vd = $('#profile-form').validator({
+
+                    onValid: function (validity) {
+                        $(validity.field).closest('.am-input-group').find('.am-alert').hide();
+                    },
+
+                    onInValid: function (validity) {
+                        var $field = $(validity.field);
+                        var $group = $field.closest('.am-input-group');
+                        var $alert = $group.find('.am-alert');
+                        // 使用自定义的提示信息 或 插件内置的提示信息
+                        var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+
+                        if (!$alert.length) {
+                            $alert = $('<div class="log-alert am-alert am-alert-danger am-radius"></div>').hide().appendTo($group);
+                        }
+                        $alert.html(msg).show();
+                    },
+                    submit: function () {
+                        if (!this.isFormValid()) {
+                            return;
+                        }
+                        vue.$http({
+                            url: '/profile/save',
+                            method: 'POST',
+                            emulateJSON: true,
+                            data: {
+                                username: vue.username,
+                                email: vue.email,
+                                qq: vue.qq,
+                                phone: vue.phone,
+                                detail: vue.detail
+                            }
+                        }).then(function (res) {
+                            debugger;
+                            if (res.data.status == "fail") {
+                                alert('failed to save.');
+                            } else {
+                                alert('success to save');
+                            }
+                        });
+                    }
+                });
+            },
+        }
+
+
+
+    }
 
 </script>

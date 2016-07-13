@@ -5,6 +5,9 @@ module.exports = {
     docs: function(state) {
         return state.docs;
     },
+    fav_docs: function(state) {
+        return state.fav_docs;
+    },
     search_title: function(state) {
         return state.search_title;
     },

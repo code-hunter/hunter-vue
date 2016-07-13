@@ -11,8 +11,8 @@
                         <span><a href="" class="h-author">作者:{{doc.author}}&nbsp;</a></span>
                         <span>{{doc.published_time}}</span>
                         <p>
-                            <a href="" @click="on_approve(doc._id)"><span class="am-icon-heart am-icon-fw  "></span></a>
-                            <a href="" @click="on_bookmark(doc._id)"><span class="am-icon-star am-icon-fw "></span></a>
+                            <a @click="on_approve(doc.id)"><span class="am-icon-heart am-icon-fw  "></span></a>
+                            <a @click="on_bookmark(doc.id)"><span class="am-icon-star am-icon-fw "></span></a>
                         </p>
                         <p>{{doc.summary}}
                         </p>
@@ -113,7 +113,8 @@
                     }
                 });
             },
-            on_bookmark: function () {
+            on_bookmark: function (doc_id) {
+                debugger
                 if(!App.checkLogin()){
                     window.location.href = '#/login';
                 }

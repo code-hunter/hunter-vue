@@ -10,6 +10,7 @@ var config = require('./webpack.dev.config')
 var index = require('../routes/index');
 var user = require('../routes/users');
 var archive = require('../routes/archive');
+var profile = require('../routes/profile')
 
 var app = express()
 var compiler = webpack(config)
@@ -71,6 +72,7 @@ app.use('/public', express.static('../'))
 app.use('/', index);
 app.use('/user', user);
 app.use('/archive', archive);
+app.use('/profile', profile);
 
 module.exports = app.listen(8080, function (err) {
   if (err) {

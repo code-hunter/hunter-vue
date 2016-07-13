@@ -24,9 +24,9 @@
                                 <img height="30" class="h-circle" src="../assets/i/favicon.png"> <span class="am-icon-caret-down"></span>
                             </a>
                             <ul class="am-dropdown-content">
-                                <li><a href="#"><i class="am-icon-tachometer" aria-hidden="true"></i>&nbsp;&nbsp;账户</a></li>
-                                <li><a href="#"><i class="am-icon-star" aria-hidden="true"></i>&nbsp;&nbsp;收藏</a></li>
-                                <li><a href="#"><i class="am-icon-cog" aria-hidden="true"></i>&nbsp;&nbsp;设置</a></li>
+                                <li><a v-link="{path:'/profile'}"><i class="am-icon-tachometer" aria-hidden="true"></i>&nbsp;&nbsp;账户</a></li>
+                                <li><a v-link="{path:'/fav'}"><i class="am-icon-star" aria-hidden="true"></i>&nbsp;&nbsp;收藏</a></li>
+                                <!--<li><a href="#"><i class="am-icon-cog" aria-hidden="true"></i>&nbsp;&nbsp;设置</a></li>-->
                                 <li><a href="#" @click="on_logout"><i class="am-icon-sign-out" aria-hidden="true"></i>&nbsp;&nbsp;退出</a></li>
                             </ul>
                         </li>
