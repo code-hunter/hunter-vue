@@ -48,6 +48,17 @@
     margin-bottom: 8px;
 }
 
+
+/* archive.vue*/
+.h-archive-list {
+    position: relative;
+    display: block;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px dotted #dedede;
+    border-width: 1px 0;
+}
+
 /* extends amazeui.css*/
 .am-dropdown a {
     color: #10D07A;

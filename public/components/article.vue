@@ -1,6 +1,6 @@
 <template>
+    <!--
     <div>
-
         <div v-if="docs">
             <div v-for="doc in docs" >
 
@@ -30,6 +30,44 @@
             <li class="am-pagination-next"><a href="javascript:scroll(0,0)" @click="on_next">Next &raquo;</a></li>
         </ul>
     </div>
+    -->
+
+
+    <div class="am-list-news-bd">
+        <div v-if="docs">
+            <div class="am-list">
+                <div v-for="doc in docs" class="h-archive-list">
+                    <div class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left">
+                        <div class="am-u-sm-1 am-list-thumb">
+                            <a href="" @click="on_approve(doc._id)"><span class="am-icon-heart am-icon-fw  "></span></a>
+                            <a href="" @click="on_bookmark(doc._id)"><span class="am-icon-star am-icon-fw "></span></a>
+                        </div>
+
+                        <div class=" am-u-sm-11 am-list-main">
+                            <div class="archive-font-size"><a href={{doc.url}} target="_blank">{{doc.title}}</a></div>
+                            <span><a href="" class="h-author">作者:{{doc.author}}&nbsp;</a></span>
+                            <span>{{doc.published_time}}</span>
+                            <div class="am-list-item-text">{{doc.summary}}</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div v-else>
+            <a>no docs</a>
+        </div>
+
+
+
+        <ul class="am-pagination">
+            <li class="am-pagination-prev"><a href="javascript:scroll(0,0)" @click="on_prev">&laquo; Prev</a></li>
+            <li class="am-pagination-next"><a href="javascript:scroll(0,0)" @click="on_next">Next &raquo;</a></li>
+        </ul>
+    </div>
+
 </template>
 
 
